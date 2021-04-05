@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace RemySd\SimpleRouter;
 
 class Router
 {
@@ -25,11 +25,12 @@ class Router
         ];
     }
 
-    public function match(string $url): bool
+    public function match(string $url): ?array
     {
         $basePathExplode = explode('/', $this->basePath);
         $currentTerm = explode('/', $url);
         $currentTerm = array_values(array_filter($currentTerm));
+        $params = ['params' => []];
 
         foreach ($this->routes as $route) {
 
@@ -43,7 +44,12 @@ class Router
             $isMatched = true;
             for ($i = 0; $i < count($terms); $i++) {
 
-                // TODO: check { ... } params
+                $param = preg_match('/\{[0-9a-zA-Z]*\}/', $terms[$i]);
+                if ($param) {
+                    $key = str_replace(['{', '}'], '', $terms[$i]);
+                    $params['params'][$key] = $currentTerm[$i];
+                    continue;
+                }
 
                 if ($terms[$i] !== $currentTerm[$i]) {
                     $isMatched = false;
@@ -52,9 +58,9 @@ class Router
             }
 
             if ($isMatched) {
-                return true;
+                return $params ? array_merge($route, $params) : $route;
             }
         }
-        return false;
+        return null;
     }
 }

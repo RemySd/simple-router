@@ -2,15 +2,14 @@
 
 require './vendor/autoload.php';
 
-use App\Router;
+use RemySd\SimpleRouter\Router;
 
 $router = new Router();
 
-var_dump($_SERVER['REQUEST_URI']);
-
 $router->setBasePath('/simple-router');
 
-$router->addRoute('/test', 'test', 'test', 'test');
-$router->addRoute('/test/{id}', 'test', 'testShow', 'test_show');
+$router->addRoute('/', 'home', 'index', 'homepage');
+$router->addRoute('/articles', 'article', 'all', 'article_all');
+$router->addRoute('/articles/{id}', 'article', 'show', 'article_single');
 
-var_dump($router->match($_SERVER['REQUEST_URI']));
+$properties = $router->match($_SERVER['REQUEST_URI']);
