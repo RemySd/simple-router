@@ -1,7 +1,7 @@
 {
     "name": "remysd/simple-router",
     "type": "library",
-    "description": "A simple php router to match with your url's",
+    "description": "A simple router to match with your url's",
     "version": "1.2.1",
     "license": "MIT",
     "authors": [

@@ -2,6 +2,8 @@
 
 namespace RemySd\SimpleRouter;
 
+use RemySd\SimpleRouter\Exception\RouteNameAlreadyExist;
+
 class Router
 {
     private $routes = [];
@@ -15,13 +17,17 @@ class Router
     /**
      * Create a new route with a name and a controller/action
      */
-    public function addRoute(string $url, string $controller, string $action, string $name): void
+    public function addRoute(string $url, string $controller, string $action, string $routeName): void
     {
-        $this->routes[] = [
+        if (array_key_exists($routeName, $this->routes)) {
+            throw new RouteNameAlreadyExist($routeName);
+        }
+
+        $this->routes[$routeName] = [
             'url' => $url,
             'controller' => $controller,
             'action' => $action,
-            'name' => $name
+            'name' => $routeName
         ];
     }
 
@@ -62,5 +68,10 @@ class Router
             }
         }
         return null;
+    }
+
+    public function generate(string $routeName, array $params): ?string
+    {
+
     }
 }

@@ -2,6 +2,8 @@
 
 require './../vendor/autoload.php';
 
+ini_set('display_errors', 1);
+
 use RemySd\SimpleRouter\Router;
 
 $router = new Router();
