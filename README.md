@@ -1,5 +1,8 @@
 # A simple php router to match with your url's
 
+![Packagist Version](https://img.shields.io/packagist/v/remysd/simple-router)
+![PHP from Packagist](https://img.shields.io/packagist/l/remysd/simple-router)
+
 ## Installation
 
 ```bash
