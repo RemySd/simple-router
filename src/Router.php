@@ -3,6 +3,7 @@
 namespace RemySd\SimpleRouter;
 
 use RemySd\SimpleRouter\Exception\RouteNameAlreadyExist;
+use RemySd\SimpleRouter\Exception\RouteNotFound;
 
 class Router
 {
@@ -70,8 +71,34 @@ class Router
         return null;
     }
 
-    public function generate(string $routeName, array $params): ?string
+    /**
+     * Generate a url with name and params
+     */
+    public function generate(string $routeName, array $params = []): ?string
     {
+        if (!array_key_exists($routeName, $this->routes)) {
+            throw new RouteNotFound($routeName);
+        }
 
+        $route = $this->routes[$routeName];
+        $url = $route['url'];
+
+        preg_match_all('/\{[0-9a-zA-Z]*\}/', $url, $paramsMatches);
+        $paramsMatches = $paramsMatches[0];
+        if ($paramsMatches) {
+            foreach ($paramsMatches as $paramsMatch) {
+                $paramToCheck = str_replace(['{', '}'], '', $paramsMatch);
+                if (!array_key_exists($paramToCheck, $params)) {
+                    throw new \Exception(sprintf(
+                        'Param "%s" is required to generate the route "%s"',
+                        $paramToCheck,
+                        $routeName
+                    ));
+                }
+                $url = str_replace($paramsMatch, $params[$paramToCheck], $url);
+            }
+        }
+
+        return $url;
     }
 }
