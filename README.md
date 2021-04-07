@@ -25,6 +25,8 @@ $router->addRoute('/articles/{id}', 'article', 'show', 'article_single');
 
 $properties = $router->match($_SERVER['REQUEST_URI']);
 
+$url = $router->generate('single_article', ['id' => 3]);
+
 ```
 
 ## Requirements
