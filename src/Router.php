@@ -8,7 +8,7 @@ use RemySd\SimpleRouter\Exception\RouteNotFound;
 class Router
 {
     private $routes = [];
-    private $basePath;
+    private $basePath = '';
 
     public function setBasePath(string $basePath): void
     {

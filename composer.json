@@ -10,7 +10,9 @@
             "email": "remy.sainsard@gmail.com"
         }
     ],
-    "require": {},
+    "require": {
+        "phpunit/phpunit": "^9.5"
+    },
     "autoload": {
         "psr-4": {
             "RemySd\\SimpleRouter\\": "src"
