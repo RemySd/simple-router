@@ -5,8 +5,7 @@ require './../vendor/autoload.php';
 use RemySd\SimpleRouter\Router;
 
 $router = new Router();
-
-$router->setBasePath('/simple-router/examples');
+$router->setBasePath('');
 
 $router->addRoute('/', 'home', 'index', 'homepage');
 $router->addRoute('/articles', 'article', 'all', 'all_article');
@@ -19,12 +18,16 @@ $router->addRoute(
 );
 
 $properties = $router->match($_SERVER['REQUEST_URI']);
+echo json_encode($properties);
+echo '<br>';
 
-var_dump($properties);
+echo $router->generate('all_article');
+echo '<br>';
 
-var_dump($router->generate('all_article'));
-var_dump($router->generate('single_article', ['id' => 3]));
-var_dump($router->generate(
+echo $router->generate('single_article', ['id' => 3]);
+echo '<br>';
+
+echo $router->generate(
     'all_articles_by_categories',
     ['categoriesId' => 'decorations', 'articleId' => 10]
-));
+);
